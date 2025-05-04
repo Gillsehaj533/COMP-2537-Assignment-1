@@ -111,9 +111,7 @@ app.get('/members', (req, res) => {
           </form>
         </body>
         </html>
-      `);
-      
-  });
+      `);});
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
