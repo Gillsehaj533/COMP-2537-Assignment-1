@@ -60,7 +60,20 @@ app.post('/signup', async (req, res) => {
 
   const { error } = schema.validate(req.body);
   if (error) {
-    return res.send("Invalid input. <a href='/signup'>Try again</a>");
+    return res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Invalid Signup</title>
+        <link rel="stylesheet" href="/styles.css">
+      </head>
+      <body>
+        <h1>Invalid input!</h1>
+        <p>Your signup information didn't pass validation.</p>
+        <button onclick="location.href='/signup'">Try Again</button>
+      </body>
+      </html>
+    `);
   }
 
   const hashed = await bcrypt.hash(req.body.password, 12);
@@ -89,12 +102,38 @@ app.post('/login', async (req, res) => {
 
   const { error } = schema.validate(req.body);
   if (error) {
-    return res.send("Invalid login. <a href='/login'>Try again</a>");
+    return res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Invalid Login</title>
+        <link rel="stylesheet" href="/styles.css">
+      </head>
+      <body>
+        <h1>Invalid login!</h1>
+        <p>Please enter a valid email and password.</p>
+        <button onclick="location.href='/login'">Try Again</button>
+      </body>
+      </html>
+    `);
   }
 
   const user = await db.collection('users').findOne({ email: req.body.email });
   if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
-    return res.send("Incorrect email or password. <a href='/login'>Try again</a>");
+    return res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Login Failed</title>
+        <link rel="stylesheet" href="/styles.css">
+      </head>
+      <body>
+        <h1>Login failed!</h1>
+        <p>Incorrect email or password.</p>
+        <button onclick="location.href='/login'">Try Again</button>
+      </body>
+      </html>
+    `);
   }
 
   req.session.user = { name: user.name, email: user.email };
