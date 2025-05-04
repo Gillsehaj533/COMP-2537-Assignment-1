@@ -47,8 +47,8 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', async (req, res) => {
     const schema = Joi.object({
-        name: Joi.string().max(20).required(),
-        email: Joi.string.email().required(),
+        name: Joi.string().required(),
+        email: Joi.string().email().required(),
         password: Joi.string().required()
     });
 
@@ -111,7 +111,8 @@ app.get('/members', (req, res) => {
           </form>
         </body>
         </html>
-      `);});
+      `);      
+});
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
