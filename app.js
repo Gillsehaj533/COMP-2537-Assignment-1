@@ -3,7 +3,6 @@ const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const bcrypt = require('bcryptjs');
-
 const Joi = require('joi');
 const { MongoClient } = require('mongodb');
 
@@ -90,9 +89,27 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/members', (req, res) => {
-    if (!req.session.user) return res.redirect('/');
-    res.sendFile(__dirname + '/public/members.html');
-});
+    if (!req.session.user) {
+      return res.redirect('/login');
+    }
+  
+    const images = ['img1.jpg', 'img2.jpg', 'img3.jpg'];
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+  
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head><title>Members</title></head>
+      <body>
+        <h1>Hello, ${req.session.user.name}.</h1>
+        <img src="/images/${randomImage}" style="width:300px"><br><br>
+        <form method="GET" action="/logout">
+          <button>Sign out</button>
+        </form>
+      </body>
+      </html>
+    `);
+  });
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
