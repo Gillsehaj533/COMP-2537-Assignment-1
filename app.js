@@ -97,18 +97,22 @@ app.get('/members', (req, res) => {
     const randomImage = images[Math.floor(Math.random() * images.length)];
   
     res.send(`
-      <!DOCTYPE html>
-      <html>
-      <head><title>Members</title></head>
-      <body>
-        <h1>Hello, ${req.session.user.name}.</h1>
-        <img src="/images/${randomImage}" style="width:300px"><br><br>
-        <form method="GET" action="/logout">
-          <button>Sign out</button>
-        </form>
-      </body>
-      </html>
-    `);
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Members</title>
+          <link rel="stylesheet" href="/styles.css">
+        </head>
+        <body>
+          <h1>Hello, ${req.session.user.name}.</h1>
+          <img src="/images/${randomImage}" style="width:300px" /><br><br>
+          <form method="GET" action="/logout">
+            <button>Sign out</button>
+          </form>
+        </body>
+        </html>
+      `);
+      
   });
 
 app.get('/logout', (req, res) => {
