@@ -12,7 +12,7 @@ let db;
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('views'));
 
 // Session config
 app.use(session({
@@ -34,20 +34,19 @@ app.listen(3000, async () => {
   console.log("App running at http://localhost:3000");
 });
 
-// Routes
 
 // Home
 app.get('/', (req, res) => {
   if (req.session.user) {
     res.redirect('/members');
   } else {
-    res.sendFile(__dirname + '/public/home.html');
+    res.sendFile(__dirname + '/views/home.ejs');
   }
 });
 
 // Signup Page
 app.get('/signup', (req, res) => {
-  res.sendFile(__dirname + '/public/signup.html');
+  res.sendFile(__dirname + '/views/signup.ejs');
 });
 
 // Signup Handler
@@ -90,7 +89,7 @@ app.post('/signup', async (req, res) => {
 
 // Login Page
 app.get('/login', (req, res) => {
-  res.sendFile(__dirname + '/public/login.html');
+  res.sendFile(__dirname + '/views/login.ejs');
 });
 
 // Login Handler
@@ -147,7 +146,6 @@ app.get('/members', (req, res) => {
   }
 
   const images = ['img1.jpg', 'img2.jpg', 'img3.jpg'];
-  const randomImage = images[Math.floor(Math.random() * images.length)];
 
   res.send(`
     <!DOCTYPE html>
@@ -158,7 +156,7 @@ app.get('/members', (req, res) => {
     </head>
     <body>
       <h1>Hello, ${req.session.user.name}.</h1>
-      <img src="/images/${randomImage}" style="width:300px"><br><br>
+      <img src="/images/${images}" style="width:300px"><br><br>
       <form method="GET" action="/logout">
         <button>Sign out</button>
       </form>
@@ -175,5 +173,5 @@ app.get('/logout', (req, res) => {
 
 // 404 Not Found
 app.use((req, res) => {
-  res.status(404).sendFile(__dirname + '/public/404.html');
+  res.status(404).sendFile(__dirname + '/views/404.ejs');
 });
