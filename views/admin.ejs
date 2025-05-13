@@ -1,0 +1,35 @@
+<%- include('templates/header', { user: user, title: "Admin Panel" }) %>
+
+<h1 class="mb-4">Admin Panel</h1>
+
+<table class="table table-striped table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Type</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach(u => { %>
+      <tr>
+        <td><%= u.name %></td>
+        <td><%= u.email %></td>
+        <td><%= u.type || 'user' %></td>
+        <td>
+          <%= user.email === u.email ? 'Me' : u.name %> (<%= u.type %>)
+        </td>        
+        <td>
+          <% if (u.type === 'admin') { %>
+            <a href="/demote/<%= u.email %>" class="btn btn-warning btn-sm">Demote</a>
+          <% } else { %>
+            <a href="/promote/<%= u.email %>" class="btn btn-success btn-sm">Promote</a>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('templates/footer') %>
