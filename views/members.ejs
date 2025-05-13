@@ -1,0 +1,13 @@
+<%- include('templates/header', { user: user, title: "Members Area" }) %>
+
+<h2 class="mb-4 text-center">Hello, <%= user.name %>!</h2>
+
+<div class="row">
+  <% images.forEach(img => { %>
+    <div class="col-md-4 mb-4">
+      <img src="/images/<%= img %>" class="img-fluid rounded shadow">
+    </div>
+  <% }) %>
+</div>
+
+<%- include('templates/footer') %>

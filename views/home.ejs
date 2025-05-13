@@ -1,0 +1,15 @@
+<%- include('templates/header', { user: user, title: "Home" }) %>
+
+<h1 class="text-center">Welcome</h1>
+
+<% if (!user) { %>
+  <p class="text-center">Please log in or sign up to continue:</p>
+  <div class="text-center">
+    <a href="/login" class="btn btn-primary mx-2">Login</a>
+    <a href="/signup" class="btn btn-success mx-2">Sign Up</a>
+  </div>
+<% } else { %>
+  <p class="text-center">Welcome back, <strong><%= user.name %></strong>!</p>
+<% } %>
+
+<%- include('templates/footer') %>
